@@ -11,17 +11,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import com.jakem.randomfacts.core.util.Resource
-import com.jakem.randomfacts.feature_facts.data.remote.RetrofitInstance
-import com.jakem.randomfacts.feature_facts.data.repository.FactRepositoryImpl
 import com.jakem.randomfacts.feature_facts.domain.repository.FactRepository
 import com.jakem.randomfacts.ui.theme.RandomFactsTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var factRepository: FactRepository
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val factRepository: FactRepository = FactRepositoryImpl(RetrofitInstance.api)
 
         lifecycleScope.launchWhenCreated {
 
