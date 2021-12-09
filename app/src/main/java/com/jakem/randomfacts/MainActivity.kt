@@ -29,11 +29,14 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launchWhenCreated {
 
             factRepository.getNumberFacts(1, 50).collect { result ->
+                Log.d("MainActivity", "NumberFacts:")
                 when (result) {
-                    is Resource.Loading -> Log.d("MainActivity", "loading number facts")
-                    is Resource.Error -> Log.d("MainActivity", result.message ?: "Error")
-                    is Resource.Success -> Log.d("MainActivity", result.data.toString())
+                    is Resource.Loading -> Log.d("MainActivity", "\tLoading")
+                    is Resource.Error -> Log.d("MainActivity", "\tError")
+                    is Resource.Success -> Log.d("MainActivity", "\tSuccess")
                 }
+                Log.d("MainActivity", "\tMessage: " + result.message)
+                Log.d("MainActivity", "\tData: " + result.data)
             }
 
             factRepository.getYearFacts(1998, 2021).collect { result ->

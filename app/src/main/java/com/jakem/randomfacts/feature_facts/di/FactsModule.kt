@@ -1,5 +1,8 @@
 package com.jakem.randomfacts.feature_facts.di
 
+import android.app.Application
+import androidx.room.Room
+import com.jakem.randomfacts.feature_facts.data.local.FactDatabase
 import com.jakem.randomfacts.feature_facts.data.remote.FactApi
 import com.jakem.randomfacts.feature_facts.data.repository.FactRepositoryImpl
 import com.jakem.randomfacts.feature_facts.domain.repository.FactRepository
@@ -27,10 +30,17 @@ object FactsModule {
 
     @Provides
     @Singleton
+    fun provideFactDatabase(app: Application): FactDatabase {
+        return Room.databaseBuilder(app, FactDatabase::class.java, "fact_db").build()
+    }
+
+    @Provides
+    @Singleton
     fun provideFactRepository(
-        api: FactApi
+        api: FactApi,
+        db: FactDatabase
     ): FactRepository {
-        return FactRepositoryImpl(api)
+        return FactRepositoryImpl(api, db.dao)
     }
 
 }
