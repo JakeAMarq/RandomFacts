@@ -10,42 +10,35 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
+import com.jakem.randomfacts.core.util.Resource
 import com.jakem.randomfacts.feature_facts.data.remote.RetrofitInstance
+import com.jakem.randomfacts.feature_facts.data.repository.FactRepositoryImpl
+import com.jakem.randomfacts.feature_facts.domain.repository.FactRepository
 import com.jakem.randomfacts.ui.theme.RandomFactsTheme
-import retrofit2.HttpException
-import java.io.IOException
+import kotlinx.coroutines.flow.collect
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val factRepository: FactRepository = FactRepositoryImpl(RetrofitInstance.api)
+
         lifecycleScope.launchWhenCreated {
-            val response = try {
-                RetrofitInstance.api.getFactForNumbers(1, 50)
-            } catch (e: IOException) {
-                Log.d("MainActivity", "IOException", e)
-                return@launchWhenCreated
-            } catch (e: HttpException) {
-                Log.d("MainActivity", "HttpException", e)
-                return@launchWhenCreated
+
+            factRepository.getNumberFacts(1, 50).collect { result ->
+                when (result) {
+                    is Resource.Loading -> Log.d("MainActivity", "loading number facts")
+                    is Resource.Error -> Log.d("MainActivity", result.message ?: "Error")
+                    is Resource.Success -> Log.d("MainActivity", result.data.toString())
+                }
             }
 
-            if (response.isSuccessful && response.body() != null) {
-                Log.d("MainActivity", response.body()!!.toString())
-            }
-
-            val response2 = try {
-                RetrofitInstance.api.getFactForYears(1998)
-            } catch (e: IOException) {
-                Log.d("MainActivity", "IOException", e)
-                return@launchWhenCreated
-            } catch (e: HttpException) {
-                Log.d("MainActivity", "HttpException", e)
-                return@launchWhenCreated
-            }
-
-            if (response2.isSuccessful && response.body() != null) {
-                Log.d("MainActivity", response2.body()!!.toString())
+            factRepository.getYearFacts(1998, 2021).collect { result ->
+                when (result) {
+                    is Resource.Loading -> Log.d("MainActivity", "loading year facts")
+                    is Resource.Error -> Log.d("MainActivity", result.message ?: "Error")
+                    is Resource.Success -> Log.d("MainActivity", result.data.toString())
+                }
             }
 
         }
