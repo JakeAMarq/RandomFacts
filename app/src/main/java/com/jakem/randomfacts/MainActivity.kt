@@ -1,6 +1,7 @@
 package com.jakem.randomfacts
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -13,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -26,11 +28,21 @@ import com.jakem.randomfacts.feature_facts.presentation.fact_list.FactListViewMo
 import com.jakem.randomfacts.feature_facts.presentation.year_fact.YearFactScreen
 import com.jakem.randomfacts.feature_facts.presentation.year_fact.YearFactViewModel
 import com.jakem.randomfacts.ui.theme.RandomFactsTheme
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.android.components.ActivityComponent
 import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @EntryPoint
+    @InstallIn(ActivityComponent::class)
+    interface ViewModelFactoryProvider {
+        fun yearFactViewModelFactory(): YearFactViewModel.Factory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,12 +115,7 @@ fun RandomFactsNavHost(
             val year = entry.arguments?.getInt("year")
                 ?: throw IllegalStateException("No year argument passed to YearFactScreen")
 
-            val viewModel = hiltViewModel<YearFactViewModel>()
-
-            // TODO: fix this hacky way to prevent multiple unnecessary network calls. Figure out viewmodel factory
-            remember(year) {
-                viewModel.onGetYearFact(year)
-            }
+            val viewModel = yearFactViewModel(year)
 
             // Shows a toast whenever a new ShowToast event is emitted from viewModel.eventFlow
             val context = LocalContext.current
@@ -130,6 +137,16 @@ fun RandomFactsNavHost(
             )
         }
     }
+}
+
+@Composable
+fun yearFactViewModel(year: Int): YearFactViewModel {
+    val factory = EntryPointAccessors.fromActivity(
+        LocalContext.current as Activity,
+        MainActivity.ViewModelFactoryProvider::class.java
+    ).yearFactViewModelFactory()
+
+    return viewModel(factory = YearFactViewModel.provideFactory(factory, year))
 }
 
 enum class RandomFactsScreen {
