@@ -23,7 +23,7 @@ class FactRepositoryImpl(
         emit(Resource.Loading(data = localFactList))
 
         try {
-            val factMapResponse = api.getFactForNumbers(start, end)
+            val factMapResponse = api.getNumberFacts(start, end)
 
             if (factMapResponse.isSuccessful && factMapResponse.body() != null) {
 
@@ -63,7 +63,7 @@ class FactRepositoryImpl(
         emit(Resource.Loading())
 
         try {
-            val response = api.getFactForYear(year)
+            val response = api.getYearFact(year)
 
             if (response.isSuccessful && response.body() != null) {
                 emit(Resource.Success(response.body()!!))

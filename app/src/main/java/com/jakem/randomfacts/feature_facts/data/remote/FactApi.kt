@@ -12,13 +12,13 @@ interface FactApi {
     }
 
     @GET("/{start}..{end}/trivia?json")
-    suspend fun getFactForNumbers(
+    suspend fun getNumberFacts(
         @Path("start") start: Int,
         @Path("end") end: Int = start
     ): Response<Map<Int, String>>
 
     @GET("/{year}/year/?json")
-    suspend fun getFactForYear(
+    suspend fun getYearFact(
         @Path("year") year: Int
     ): Response<Fact>
 }
