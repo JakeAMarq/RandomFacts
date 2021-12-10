@@ -84,7 +84,7 @@ fun RandomFactsNavHost(
                 viewModel.eventFlow.collectLatest { event ->
                     when(event) {
                         is FactListViewModel.UiEvent.ShowToast -> {
-                            Toast.makeText(context, event.messageId, Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, event.messageId, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
