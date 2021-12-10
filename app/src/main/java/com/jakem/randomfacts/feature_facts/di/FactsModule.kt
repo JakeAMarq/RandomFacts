@@ -6,6 +6,8 @@ import com.jakem.randomfacts.feature_facts.data.local.FactDatabase
 import com.jakem.randomfacts.feature_facts.data.remote.FactApi
 import com.jakem.randomfacts.feature_facts.data.repository.FactRepositoryImpl
 import com.jakem.randomfacts.feature_facts.domain.repository.FactRepository
+import com.jakem.randomfacts.feature_facts.domain.use_cases.GetNumberFactsUseCase
+import com.jakem.randomfacts.feature_facts.domain.use_cases.GetYearFactUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,6 +43,22 @@ object FactsModule {
         db: FactDatabase
     ): FactRepository {
         return FactRepositoryImpl(api, db.dao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetNumberFactsUseCase(
+        repository: FactRepository
+    ): GetNumberFactsUseCase {
+        return GetNumberFactsUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetYearFactUseCase(
+        repository: FactRepository
+    ): GetYearFactUseCase {
+        return GetYearFactUseCase(repository)
     }
 
 }

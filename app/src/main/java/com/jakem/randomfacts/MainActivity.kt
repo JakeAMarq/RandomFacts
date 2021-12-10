@@ -12,6 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import com.jakem.randomfacts.core.util.Resource
 import com.jakem.randomfacts.feature_facts.domain.repository.FactRepository
+import com.jakem.randomfacts.feature_facts.domain.use_cases.GetNumberFactsUseCase
+import com.jakem.randomfacts.feature_facts.domain.use_cases.GetYearFactUseCase
 import com.jakem.randomfacts.ui.theme.RandomFactsTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -21,14 +23,16 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     @Inject
-    lateinit var factRepository: FactRepository
+    lateinit var getNumberFactsUseCase: GetNumberFactsUseCase
+    @Inject
+    lateinit var getYearFactUseCase: GetYearFactUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         lifecycleScope.launchWhenCreated {
 
-            factRepository.getNumberFacts(1, 50).collect { result ->
+            getNumberFactsUseCase(1, 50).collect { result ->
                 Log.d("MainActivity", "NumberFacts:")
                 when (result) {
                     is Resource.Loading -> Log.d("MainActivity", "\tLoading")
@@ -39,7 +43,7 @@ class MainActivity : ComponentActivity() {
                 Log.d("MainActivity", "\tData: " + result.data)
             }
 
-            factRepository.getYearFact(1998).collect { result ->
+            getYearFactUseCase(1998).collect { result ->
                 when (result) {
                     is Resource.Loading -> Log.d("MainActivity", "loading year facts")
                     is Resource.Error -> Log.d("MainActivity", result.message ?: "Error")
