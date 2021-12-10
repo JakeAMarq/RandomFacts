@@ -14,6 +14,6 @@ interface FactDao {
     @Query("DELETE FROM Fact WHERE number BETWEEN :start AND :end")
     suspend fun deleteFacts(start: Int, end: Int = start)
 
-    @Query("SELECT * FROM Fact WHERE number BETWEEN :start AND :end")
+    @Query("SELECT * FROM Fact WHERE number BETWEEN :start AND :end ORDER BY number ASC")
     suspend fun getFacts(start: Int, end: Int = start): List<Fact>
 }
