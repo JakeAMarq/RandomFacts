@@ -19,7 +19,7 @@ import com.google.accompanist.placeholder.material.fade
 import com.google.accompanist.placeholder.placeholder
 import com.jakem.randomfacts.R
 import com.jakem.randomfacts.feature_facts.domain.model.Fact
-import com.jakem.randomfacts.feature_facts.presentation.fact_list.FactCard
+import com.jakem.randomfacts.feature_facts.presentation.FactCard
 import com.jakem.randomfacts.ui.theme.RandomFactsTheme
 
 @Composable

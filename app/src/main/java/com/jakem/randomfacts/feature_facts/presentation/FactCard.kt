@@ -1,4 +1,4 @@
-package com.jakem.randomfacts.feature_facts.presentation.fact_list
+package com.jakem.randomfacts.feature_facts.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*

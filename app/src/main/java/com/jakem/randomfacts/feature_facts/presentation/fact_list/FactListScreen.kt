@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.jakem.randomfacts.R
 import com.jakem.randomfacts.feature_facts.domain.model.Fact
+import com.jakem.randomfacts.feature_facts.presentation.FactCard
 import com.jakem.randomfacts.ui.theme.RandomFactsTheme
 
 @Composable
