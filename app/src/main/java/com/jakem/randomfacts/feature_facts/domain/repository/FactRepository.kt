@@ -10,8 +10,7 @@ interface FactRepository {
         end: Int = start
     ): Flow<Resource<List<Fact>>>
 
-    fun getYearFacts(
-        startYear: Int,
-        endYear: Int = startYear
-    ): Flow<Resource<List<Fact>>>
+    fun getYearFact(
+        year: Int
+    ): Flow<Resource<Fact>>
 }

@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                 Log.d("MainActivity", "\tData: " + result.data)
             }
 
-            factRepository.getYearFacts(1998, 2021).collect { result ->
+            factRepository.getYearFact(1998).collect { result ->
                 when (result) {
                     is Resource.Loading -> Log.d("MainActivity", "loading year facts")
                     is Resource.Error -> Log.d("MainActivity", result.message ?: "Error")

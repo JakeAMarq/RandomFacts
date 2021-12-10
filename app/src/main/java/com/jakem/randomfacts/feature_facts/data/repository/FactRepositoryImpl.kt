@@ -59,25 +59,18 @@ class FactRepositoryImpl(
         emit(Resource.Success(data = newFactList))
     }
 
-    override fun getYearFacts(startYear: Int, endYear: Int): Flow<Resource<List<Fact>>> = flow {
+    override fun getYearFact(year: Int): Flow<Resource<Fact>> = flow {
         emit(Resource.Loading())
 
         try {
-            val factMapResponse = api.getFactForYears(startYear, endYear)
+            val response = api.getFactForYear(year)
 
-            if (factMapResponse.isSuccessful) {
-
-                val factList = factMapResponse.body()!!.map { entry ->
-                    Fact(
-                        number = entry.key,
-                        text = entry.value
-                    )
-                }
-
-                emit(Resource.Success(factList))
+            if (response.isSuccessful && response.body() != null) {
+                emit(Resource.Success(response.body()!!))
             } else {
                 emit(Resource.Error("Oops, something went wrong!"))
             }
+
         } catch(e: HttpException) {
             emit(Resource.Error("Oops, something went wrong!"))
         } catch(e: IOException) {
