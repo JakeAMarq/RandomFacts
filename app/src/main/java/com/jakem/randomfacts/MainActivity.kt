@@ -1,13 +1,16 @@
 package com.jakem.randomfacts
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.clickable
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -16,8 +19,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.jakem.randomfacts.RandomFactsScreen.FactList
 import com.jakem.randomfacts.RandomFactsScreen.YearFact
+import com.jakem.randomfacts.feature_facts.presentation.fact_list.FactListScreen
+import com.jakem.randomfacts.feature_facts.presentation.fact_list.FactListViewModel
 import com.jakem.randomfacts.ui.theme.RandomFactsTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -53,10 +59,25 @@ fun RandomFactsNavHost(
         modifier = modifier
     ) {
         composable(FactList.name) {
-            Text(
-                text = "FactList screen",
-                modifier = Modifier.clickable {
-                    navController.navigate("${YearFact.name}/1998")
+
+            val viewModel: FactListViewModel = hiltViewModel()
+
+            // Shows a toast whenever a new ShowToast event is emitted from viewModel.eventFlow
+            val context = LocalContext.current
+            LaunchedEffect(key1 = true) {
+                viewModel.eventFlow.collectLatest { event ->
+                    when(event) {
+                        is FactListViewModel.UiEvent.ShowToast -> {
+                            Toast.makeText(context, event.message, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
+            }
+
+            FactListScreen(
+                state = viewModel.state.value,
+                onFactCardClick = {
+                    navController.navigate("${YearFact.name}/${1900 + it.number}")
                 }
             )
         }
