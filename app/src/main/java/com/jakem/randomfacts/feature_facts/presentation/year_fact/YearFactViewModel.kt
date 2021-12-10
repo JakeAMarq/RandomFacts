@@ -1,9 +1,11 @@
 package com.jakem.randomfacts.feature_facts.presentation.year_fact
 
+import androidx.annotation.StringRes
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.jakem.randomfacts.R
 import com.jakem.randomfacts.core.util.Resource
 import com.jakem.randomfacts.feature_facts.domain.use_cases.GetYearFactUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,7 +48,7 @@ class YearFactViewModel @Inject constructor(
                                 isLoading = false
                             )
 
-                            _eventFlow.emit(UiEvent.ShowToast(result.message ?: "Unknown error"))
+                            _eventFlow.emit(UiEvent.ShowToast(result.messageId ?: R.string.error_unknown))
                         }
                         is Resource.Loading -> {
                             _state.value = state.value.copy(
@@ -60,7 +62,7 @@ class YearFactViewModel @Inject constructor(
     }
 
     sealed class UiEvent {
-        data class ShowToast(val message: String): UiEvent()
+        data class ShowToast(@StringRes val messageId: Int): UiEvent()
     }
 
 }

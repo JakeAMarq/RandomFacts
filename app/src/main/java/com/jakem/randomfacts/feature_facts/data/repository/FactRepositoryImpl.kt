@@ -1,5 +1,6 @@
 package com.jakem.randomfacts.feature_facts.data.repository
 
+import com.jakem.randomfacts.R
 import com.jakem.randomfacts.core.util.Resource
 import com.jakem.randomfacts.feature_facts.data.local.FactDao
 import com.jakem.randomfacts.feature_facts.data.remote.FactApi
@@ -39,18 +40,18 @@ class FactRepositoryImpl(
                 dao.insertFacts(factList)
             } else {
                 emit(Resource.Error(
-                    message = "Oops, something went wrong!",
+                    messageId = R.string.error_something_went_wrong,
                     data = localFactList
                 ))
             }
         } catch(e: HttpException) {
             emit(Resource.Error(
-                message = "Oops, something went wrong!",
+                messageId = R.string.error_something_went_wrong,
                 data = localFactList
             ))
         } catch(e: IOException) {
             emit(Resource.Error(
-                message = "Couldn't reach server, check your internet connection.",
+                messageId = R.string.error_no_internet,
                 data = localFactList
             ))
         }
@@ -68,13 +69,13 @@ class FactRepositoryImpl(
             if (response.isSuccessful && response.body() != null) {
                 emit(Resource.Success(response.body()!!))
             } else {
-                emit(Resource.Error("Oops, something went wrong!"))
+                emit(Resource.Error(R.string.error_something_went_wrong))
             }
 
         } catch(e: HttpException) {
-            emit(Resource.Error("Oops, something went wrong!"))
+            emit(Resource.Error(R.string.error_something_went_wrong))
         } catch(e: IOException) {
-            emit(Resource.Error("Couldn't reach server, check your internet connection."))
+            emit(Resource.Error(R.string.error_no_internet))
         }
     }
 }
