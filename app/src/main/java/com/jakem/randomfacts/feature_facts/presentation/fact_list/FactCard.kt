@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jakem.randomfacts.R
 import com.jakem.randomfacts.feature_facts.domain.model.Fact
-import com.jakem.randomfacts.feature_facts.domain.model.FactType
 import com.jakem.randomfacts.ui.theme.RandomFactsTheme
 
 private val CardHeight = 175.dp
@@ -86,8 +85,7 @@ fun FactCardPreviewLight() {
                         number = 2,
                         text = "2 is the number of starts in a binary star system" +
                                 " (a stellar system consisting of two stars orbiting" +
-                                " around their center of mass).",
-                        type = FactType.Number
+                                " around their center of mass)."
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -116,8 +114,7 @@ fun FactCardPreviewDark() {
                         number = 2,
                         text = "2 is the number of starts in a binary star system" +
                                 " (a stellar system consisting of two stars orbiting" +
-                                " around their center of mass).",
-                        type = FactType.Number
+                                " around their center of mass)."
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
