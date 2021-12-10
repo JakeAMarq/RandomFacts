@@ -16,7 +16,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.fade
-import com.google.accompanist.placeholder.material.shimmer
 import com.google.accompanist.placeholder.placeholder
 import com.jakem.randomfacts.R
 import com.jakem.randomfacts.feature_facts.domain.model.Fact
@@ -35,7 +34,7 @@ fun YearFactScreen(
                 IconButton(onClick = onBackButtonClick) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = "Back" // TODO
+                        contentDescription = stringResource(id = R.string.cont_desc_back_button)
                     )
                 }
             },
