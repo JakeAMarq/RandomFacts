@@ -41,24 +41,32 @@ fun YearFactScreen(
         )
 
         Box(modifier = Modifier.fillMaxSize()) {
-
-            state.fact?.let {
-                FactCard(
-                    title = stringResource(id = R.string.year_title, it.number),
-                    text = it.text,
-                    modifier = Modifier
-                        .matchParentSize()
-                        .padding(8.dp)
-                )
+            when {
+                state.fact != null -> {
+                    FactCard(
+                        title = stringResource(id = R.string.year_title, state.fact.number),
+                        text = state.fact.text,
+                        modifier = Modifier
+                            .matchParentSize()
+                            .padding(8.dp)
+                    )
+                }
+                state.isLoading -> {
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colors.secondary,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+                else -> {
+                    FactCard(
+                        title = "Error loading data",
+                        text = "This is embarrassing...",
+                        modifier = Modifier
+                            .matchParentSize()
+                            .padding(8.dp)
+                    )
+                }
             }
-
-            if (state.isLoading) {
-                CircularProgressIndicator(
-                    color = MaterialTheme.colors.secondary,
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            }
-
         }
 
     }
