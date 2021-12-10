@@ -116,18 +116,6 @@ fun RandomFactsNavHost(
 
             val viewModel = yearFactViewModel(year)
 
-            // Shows a toast whenever a new ShowToast event is emitted from viewModel.eventFlow
-            val context = LocalContext.current
-            LaunchedEffect(key1 = true) {
-                viewModel.eventFlow.collectLatest { event ->
-                    when(event) {
-                        is YearFactViewModel.UiEvent.ShowToast -> {
-                            Toast.makeText(context, event.messageId, Toast.LENGTH_LONG).show()
-                        }
-                    }
-                }
-            }
-
             YearFactScreen(
                 state = viewModel.state.value,
                 onBackButtonClick = {

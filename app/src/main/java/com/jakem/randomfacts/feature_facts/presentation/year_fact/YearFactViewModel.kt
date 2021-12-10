@@ -44,9 +44,6 @@ class YearFactViewModel @AssistedInject constructor(
     private val _state = mutableStateOf(YearFactScreenState())
     val state: State<YearFactScreenState> = _state
 
-    private val _eventFlow = MutableSharedFlow<UiEvent>()
-    val eventFlow = _eventFlow.asSharedFlow()
-
     private var getYearFactJob: Job? = null
 
     init {
@@ -70,8 +67,6 @@ class YearFactViewModel @AssistedInject constructor(
                                 fact = result.data,
                                 isLoading = false
                             )
-
-                            _eventFlow.emit(UiEvent.ShowToast(result.messageId ?: R.string.error_unknown))
                         }
                         is Resource.Loading -> {
                             _state.value = state.value.copy(
