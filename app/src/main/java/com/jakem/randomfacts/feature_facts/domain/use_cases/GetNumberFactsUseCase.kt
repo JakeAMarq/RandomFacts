@@ -9,6 +9,9 @@ class GetNumberFactsUseCase(
     private val repository: FactRepository
 ) {
     operator fun invoke(start: Int, end: Int = start): Flow<Resource<List<Fact>>> {
+
+        require(start <= end) { "Start cannot be greater than end" }
+
         return repository.getNumberFacts(start, end)
     }
 }

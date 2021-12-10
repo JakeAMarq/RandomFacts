@@ -17,6 +17,9 @@ class FactRepositoryImpl(
 ): FactRepository {
 
     override fun getNumberFacts(start: Int, end: Int): Flow<Resource<List<Fact>>> = flow {
+
+        require(start <= end) { "Start cannot be greater than end" }
+
         emit(Resource.Loading())
 
         // Emit local backup as we attempt to pull new facts from server
