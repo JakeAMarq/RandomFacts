@@ -36,6 +36,10 @@ class FactListViewModel @Inject constructor(
     private var getFactsJob: Job? = null
 
     init {
+        onRefresh()
+    }
+
+    fun onRefresh() {
         onGetFacts(FACT_LIST_START, FACT_LIST_END)
     }
 

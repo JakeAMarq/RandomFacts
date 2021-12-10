@@ -20,8 +20,6 @@ class FactRepositoryImpl(
 
         require(start <= end) { "Start cannot be greater than end" }
 
-        emit(Resource.Loading())
-
         // Emit local backup as we attempt to pull new facts from server
         val localFactList = dao.getFacts(start, end)
         emit(Resource.Loading(data = localFactList))

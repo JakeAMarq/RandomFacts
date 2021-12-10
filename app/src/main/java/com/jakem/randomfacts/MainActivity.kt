@@ -92,6 +92,7 @@ fun RandomFactsNavHost(
 
             FactListScreen(
                 state = viewModel.state.value,
+                onRefresh = viewModel::onRefresh,
                 onFactCardClick = {
 
                     // Only navigate if resumed to prevent double-click bug

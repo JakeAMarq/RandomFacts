@@ -67,6 +67,9 @@ dependencies {
     // Compose placeholder extension
     implementation "com.google.accompanist:accompanist-placeholder-material:0.20.2"
 
+    // Compose SwipeRefresh extension
+    implementation "com.google.accompanist:accompanist-swiperefresh:0.20.2"
+
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
