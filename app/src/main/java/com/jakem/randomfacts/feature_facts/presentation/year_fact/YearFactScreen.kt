@@ -44,7 +44,8 @@ fun YearFactScreen(
 
             state.fact?.let {
                 FactCard(
-                    fact = it,
+                    title = stringResource(id = R.string.year_title, it.number),
+                    text = it.text,
                     modifier = Modifier
                         .matchParentSize()
                         .padding(8.dp)

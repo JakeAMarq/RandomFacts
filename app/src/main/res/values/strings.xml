@@ -4,4 +4,5 @@
     <string name="title_fact_list_screen">Numbers API Cards App</string>
 
     <string name="fact_title">Random Fact #%d</string>
+    <string name="year_title">Random Fact About the Year %d</string>
 </resources>

@@ -39,7 +39,8 @@ fun FactListScreen(
                 items(state.facts) {
 
                     FactCard(
-                        fact = it,
+                        title = stringResource(id = R.string.fact_title, it.number),
+                        text = it.text,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 8.dp, vertical = 16.dp)

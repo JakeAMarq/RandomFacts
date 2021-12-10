@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,7 +24,8 @@ private val CardHeight = 175.dp
 
 @Composable
 fun FactCard(
-    fact: Fact,
+    title: String,
+    text: String,
     modifier: Modifier = Modifier
 ) {
 
@@ -51,14 +51,14 @@ fun FactCard(
             ) {
 
                 Text(
-                    text = stringResource(id = R.string.fact_title, fact.number),
+                    text = title,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.ExtraBold,
                     modifier = Modifier.padding(vertical = 20.dp)
                 )
 
                 Text(
-                    text = fact.text,
+                    text = text,
                     modifier = Modifier.alpha(0.7F)
                 )
 
@@ -81,12 +81,10 @@ fun FactCardPreviewLight() {
 
             Column {
                 FactCard(
-                    fact = Fact(
-                        number = 2,
-                        text = "2 is the number of starts in a binary star system" +
-                                " (a stellar system consisting of two stars orbiting" +
-                                " around their center of mass)."
-                    ),
+                    title = "Random Fact #2",
+                    text = "2 is the number of starts in a binary star system" +
+                            " (a stellar system consisting of two stars orbiting" +
+                            " around their center of mass).",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(all = 8.dp)
@@ -110,12 +108,10 @@ fun FactCardPreviewDark() {
 
             Column {
                 FactCard(
-                    fact = Fact(
-                        number = 2,
-                        text = "2 is the number of starts in a binary star system" +
-                                " (a stellar system consisting of two stars orbiting" +
-                                " around their center of mass)."
-                    ),
+                    title = "Random Fact #2",
+                    text = "2 is the number of starts in a binary star system" +
+                            " (a stellar system consisting of two stars orbiting" +
+                            " around their center of mass).",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(all = 8.dp)
