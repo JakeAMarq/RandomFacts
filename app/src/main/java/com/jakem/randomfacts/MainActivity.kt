@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -62,7 +63,7 @@ fun RandomFactsNavHost(
         startDestination = FactList.name,
         modifier = modifier
     ) {
-        composable(FactList.name) {
+        composable(FactList.name) { entry ->
 
             val viewModel: FactListViewModel = hiltViewModel()
 
@@ -81,7 +82,12 @@ fun RandomFactsNavHost(
             FactListScreen(
                 state = viewModel.state.value,
                 onFactCardClick = {
-                    navController.navigate("${YearFact.name}/${1900 + it.number}")
+
+                    // Only navigate if resumed to prevent double-click bug
+                    if (entry.lifecycle.currentState == Lifecycle.State.RESUMED) {
+                        navController.navigate("${YearFact.name}/${1900 + it.number}")
+                    }
+
                 }
             )
         }
