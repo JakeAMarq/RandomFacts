@@ -9,5 +9,10 @@ import com.jakem.randomfacts.feature_facts.domain.model.Fact
     version = 1
 )
 abstract class FactDatabase: RoomDatabase() {
+
+    companion object {
+        const val DB_NAME = "fact_db"
+    }
+
     abstract val dao: FactDao
 }

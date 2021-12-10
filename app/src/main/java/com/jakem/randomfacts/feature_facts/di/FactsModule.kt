@@ -33,7 +33,7 @@ object FactsModule {
     @Provides
     @Singleton
     fun provideFactDatabase(app: Application): FactDatabase {
-        return Room.databaseBuilder(app, FactDatabase::class.java, "fact_db").build()
+        return Room.databaseBuilder(app, FactDatabase::class.java, FactDatabase.DB_NAME).build()
     }
 
     @Provides
